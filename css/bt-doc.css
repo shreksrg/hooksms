@@ -1,0 +1,266 @@
+body {
+    font-family: "microsoft yahei", "微软雅黑";
+    font-size: 14px
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+}
+
+ul, li, p {
+    margin: 0;
+    padding: 0
+}
+
+.ui-body-c {
+    font-family: "microsoft yahei";
+    text-shadow: none;
+}
+
+.ui-body-c .ui-link {
+    color: #fff;
+    font-weight: normal
+}
+
+.ui-body-c .ui-link:hover {
+    color: #fff;
+
+}
+
+.bt-header-login {
+    min-height: 60px;
+    background: #eeeeee;
+    text-shadow: none;
+    font-family: "microsoft yahei"
+}
+
+.bt-header-login .bt-logo {
+    position: absolute;
+    top: 6px;
+    left: 12px;
+    display: inline-block;
+    background: url("img/logo.png") no-repeat;
+    width: 168px;
+    height: 48px;
+    border-right: 1px solid #708090;
+    padding-right: 8px
+
+}
+
+.bt-header-login .bt-docuterm {
+    display: inline-block;
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    font-weight: bold;
+    font-size: 24px;
+    color: #f06e05;
+
+}
+
+.bt-footer {
+    text-shadow: none;
+    position: absolute
+}
+
+.bt-srvnumber {
+    text-align: center;
+    color: #000;
+    line-height: 36px;
+}
+
+.bt-btn {
+    display: block;
+    margin: 0 auto;
+    border: 1px solid #68a7d1;
+    text-align: center
+}
+
+.bt-btn-corner-all {
+    -webkit-border-radius: .3em;
+    -moz-border-radius: .3em;
+    border-radius: .3em
+}
+
+.bt-btn-gradient-blue2 {
+    background: #1e5799; /* Old browsers */
+    background: -moz-linear-gradient(top, #1e5799 0%, #2989d8 50%, #207cca 51%, #7db9e8 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #1e5799), color-stop(50%, #2989d8), color-stop(51%, #207cca), color-stop(100%, #7db9e8)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #1e5799 0%, #2989d8 50%, #207cca 51%, #7db9e8 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #1e5799 0%, #2989d8 50%, #207cca 51%, #7db9e8 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #1e5799 0%, #2989d8 50%, #207cca 51%, #7db9e8 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #1e5799 0%, #2989d8 50%, #207cca 51%, #7db9e8 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#1e5799', endColorstr = '#7db9e8', GradientType = 0); /* IE6-9 */
+
+}
+
+.bt-btn-gradient-blue1 {
+    background: #b8e1fc; /* Old browsers */
+    background: -moz-linear-gradient(top, #b8e1fc 0%, #a9d2f3 10%, #90bae4 25%, #90bcea 37%, #90bff0 50%, #6ba8e5 51%, #a2daf5 83%, #bdf3fd 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #b8e1fc), color-stop(10%, #a9d2f3), color-stop(25%, #90bae4), color-stop(37%, #90bcea), color-stop(50%, #90bff0), color-stop(51%, #6ba8e5), color-stop(83%, #a2daf5), color-stop(100%, #bdf3fd)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #b8e1fc 0%, #a9d2f3 10%, #90bae4 25%, #90bcea 37%, #90bff0 50%, #6ba8e5 51%, #a2daf5 83%, #bdf3fd 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #b8e1fc 0%, #a9d2f3 10%, #90bae4 25%, #90bcea 37%, #90bff0 50%, #6ba8e5 51%, #a2daf5 83%, #bdf3fd 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #b8e1fc 0%, #a9d2f3 10%, #90bae4 25%, #90bcea 37%, #90bff0 50%, #6ba8e5 51%, #a2daf5 83%, #bdf3fd 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #b8e1fc 0%, #a9d2f3 10%, #90bae4 25%, #90bcea 37%, #90bff0 50%, #6ba8e5 51%, #a2daf5 83%, #bdf3fd 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#b8e1fc', endColorstr = '#bdf3fd', GradientType = 0); /* IE6-9 */
+
+}
+
+.bt-btn-text {
+    color: #fff;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px black;
+}
+
+/**
+ 登录页 - login.html
+*/
+
+#bstLogin, #bstDesc {
+    background: #4c83a8;
+}
+
+.bt-login-bgurl {
+    background: url("img/people.gif") top center no-repeat;
+}
+
+.bt-login-form {
+    margin-top: 104px;
+    border: 1px solid #ccc;
+    background: #fff;
+
+    min-height: 100px;
+
+    -webkit-border-radius: .8em;
+    -moz-border-radius: .8em;
+    border-radius: .8em
+}
+
+.bt-login-form div {
+    min-height: 50px;
+    clear: both;
+}
+
+.bt-login-form div.hrline {
+    border-bottom: 1px solid #ccc;
+}
+
+.bt-login-form  span {
+    display: inline-block;
+    float: left;
+}
+
+.bt-login-form  span.loginLabel {
+    color: #000;
+    line-height: 48px;
+    padding-left: 12px
+
+}
+
+.bt-login-form  span.loginTxt {
+    min-width: 75%
+}
+
+.bt-login-form  span.loginTxt  input {
+    height: 24px;
+    width: 100%;
+    margin-top: 11px;
+    border: none
+
+}
+
+.bt-btn-login {
+    clear: both;
+    margin-top: 20px
+}
+
+.btn-login {
+    width: 75%;
+    min-height: 32px;
+    line-height: 32px;
+}
+
+.bt-login-setting {
+    clear: both;
+    margin-top: 52px;
+}
+
+.bt-login-setting .forgetpwd {
+    float: left;
+}
+
+.bt-login-setting .forgetpwd {
+    line-height: 32px;
+}
+
+.bt-login-setting .autologin {
+    float: right;
+}
+
+.bt-login-setting .autologin span {
+    display: inline-block;
+    float: right;
+}
+
+.bt-login-setting .autologin span.autoLabel {
+    color: #fff;
+    line-height: 32px;
+    padding-right: 6px
+}
+
+/**
+ 资费说明页 - description.html
+*/
+
+.bt-header-control {
+    height: 50px;
+    background: #eaeaea;
+    overflow: hidden;
+    position: relative;
+    border-bottom: 2px solid #1d2088;
+    text-shadow: none;
+    font-family: "microsoft yahei"
+}
+
+.bt-header-control .bt-btn-backhome {
+    position: absolute;
+    display: block;
+    width: 60px;
+    height: 30px;
+    background: url("img/btn_backhome.png") no-repeat;
+    top: 10px;
+    left: 12px
+
+}
+
+.bt-header-control .bt-headocer {
+    display: inline-block;
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 18px;
+    color: #f06e05;
+    font-weight: normal;
+
+}
+
+.bt-desc-accept {
+    margin-top: 42px
+}
+
+.bt-desc-text {
+    margin-top: 32px;
+    color: #fff;
+}
+
+.bt-desc-accept span {
+    display: block;
+    clear: both;
+    padding: 24px 0;
+
+}
+
+
+
+
