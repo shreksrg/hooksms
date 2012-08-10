@@ -1,0 +1,196 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/jquery.mobile-1.2.0-alpha.1.min.css"/>
+    <link rel="stylesheet" href="css/bt-doc.css">
+    <script src="jscript/jquery-1.7.2.min.js"></script>
+    <script src="jscript/jquery.mobile-1.2.0-alpha.1.min.js"></script>
+    <title>jQuery Mobile: Demos and Documentation</title>
+
+</head>
+<body>
+
+<div data-role="page" id="bstStatistics">
+    <div data-role="header" class="bt-header-statistics">
+        <div><a class="bt-btn-backprev" href="index.html"></a></div>
+        <div class="bt-headocer">数据统计</div>
+    </div>
+
+    <!-- /header -->
+
+
+    <div class="bt-tip-switch">
+        <a href="#" class="btn-smscount" data-role="none">短信统计</a><a data-role="none" class="btn-callcount" href="#">来电统计</a>
+    </div>
+
+    <style type="text/css">
+        .btTurn {
+            clear: both;
+            width: 78px;
+            height: 32px;
+            border: 1px solid #ccc;
+            background: #ffeeee;
+            border-radius: 1em;
+            position: relative
+
+        }
+
+        .btTurn span, .btTurn a {
+            position: absolute;
+
+        }
+
+        .btTurn a {
+            display: block;
+            width: 32px;
+            height: 32px;
+            border: 1px solid #ccc;
+            border-radius: 1em;
+            background: #ff7870;
+        }
+
+        .btTurn span{
+            right: 8px;
+            line-height: 32px;
+        }
+    </style>
+
+    <div class="btTurn">
+        <span>on</span><a href="#"></a>
+    </div>
+
+
+    <div data-role="content">
+        <div class="bt-content">
+            <div class="bt-count-dateselection">
+                <ul>
+                    <li>
+                        <dl id="selYear" class="bt-dropdown">
+                            <dt><a href="#" data-role="none"><span>2012</span></a></dt>
+                            <dd>
+                                <ul></ul>
+                            </dd>
+                            <input name="year" type="hidden" value="">
+                        </dl>
+                    </li>
+                    <li class="labDate">年</li>
+                    <li>
+                        <dl id="selMonth" class="bt-dropdown">
+                            <dt><a href="#" data-role="none"><span>1</span></a></dt>
+                            <dd>
+                                <ul></ul>
+                            </dd>
+                            <input name="year" type="hidden" value="">
+                        </dl>
+                    </li>
+                    <li class="labDate">月</li>
+                    <li><a class="bt-btn-seeker" href="#" data-role="none">查询</a></li>
+                    <li></li>
+                </ul>
+
+            </div>
+
+            <div class="bt-statisesms-option">
+                <ul>
+                    <li>当月套餐: 200</li>
+                    <li>已用短信: 77</li>
+                    <li>剩余短信：130</li>
+                    <li>超出短信：上海手机公司</li>
+                    <li>超出费用：A</li>
+                    <li class="extraprice">套餐外单价：0.15(元/条)</li>
+                </ul>
+            </div>
+
+        </div>
+
+
+    </div>
+    <!-- /content -->
+
+    <style type="text/css">
+
+    </style>
+
+    <div data-role="footer" data-theme="none" data-position="fixed" class="bt-footer">
+        <div class="bt-footer-quiter">
+            <span class="srvnum">客服热线：4008111986</span><a data-role="none" class="btn-quit" href="#">退出</a>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        function abstractDateSelector(id) {
+            var _this = this;
+            _this.id = null;
+            var setID = function () {
+                _this.id = id;
+            };
+
+            this.setAppendElement = function (setting) {
+                var min = setting.min;
+                var max = setting.max;
+                for (var i = min; i <= max; i++) {
+                    var ali = '<li><a href="#">' + i + '</a></li>';
+                    $(ali).prependTo('#' + _this.id + ' dd ul').find("a").data("value", i);
+                }
+            };
+
+            this.bindClickText = function () {
+                $('#' + _this.id + ' dt a').click(function () {
+                    $('.bt-dropdown').not($('#' + _this.id)[0]).find('dd ul').hide();
+                    $('#' + _this.id + ' dd ul').toggle();
+                });
+            };
+
+            this.bindClickOption = function () {
+                $('#' + _this.id + ' dd ul li a').click(function () {
+                    var text = $(this).html();
+                    $('#' + _this.id + ' dt a span').html(text);
+                    $('#' + _this.id + ' dd ul').hide();
+                    _this.setSelectedValue($(this));
+                });
+            };
+
+            this.setSelectedValue = function (e) {
+                $('input[name=year]').val(e.data("value"));
+            };
+
+            this.bindDocumentClick = function () {
+                $(document).bind('click', function (e) {
+                    var $clicked = $(e.target);
+                    if (!$clicked.parents().hasClass("bt-dropdown"))
+                        $('#' + id + ' dd ul').hide();
+                });
+            };
+
+            var init = function () {
+                setID();
+                _this.bindDocumentClick();
+            }()
+        }
+
+        $(document).ready(function () {
+
+            var selorYear = new abstractDateSelector("selYear");
+            selorYear.setAppendElement({'min':2000, 'max':2012});
+            selorYear.bindClickText();
+            selorYear.bindClickOption();
+
+            var selorMonth = new abstractDateSelector("selMonth");
+            selorMonth.setAppendElement({'min':1, 'max':12});
+            selorMonth.bindClickText();
+            selorMonth.bindClickOption();
+
+        });
+    </script>
+
+</div>
+<!-- /page -->
+
+</body>
+</html>
+
+
+
+
