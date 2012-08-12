@@ -84,7 +84,7 @@
                 $dom.content.html(c);
             }
             this.openPopups = function () {
-                $dom.popup("open", {transition:'pop'});
+                $dom.popup("open");
             }
         }
 
@@ -98,7 +98,7 @@
          * 忘记密码
          * */
 
-        $('#btnFgpwd').bind('tap', function () {
+        $('#btnFgpwd').bind('click', function () {
             domPOP.setTitle("忘记密码")
             domPOP.setContent("请联系客服：4008111986");
             domPOP.openPopups();
@@ -110,7 +110,7 @@
          * 用户登录
          * */
 
-        $("#btnLogin").bind("tap", function () {
+        $("#btnLogin").bind("click", function () {
             var account = $('input[name=account]').val();
             var password = $('input[name=password]').val();
             domPOP.setTitle("警告");
@@ -126,8 +126,10 @@
             }
 
             $.mobile.changePage("description.html");
-            // reqireData(); // 提交表单
-            return;
+
+            return
+            requireData(); // 提交表单
+
         })
 
 
@@ -135,7 +137,7 @@
          * 提交数据并相应返回
          * */
 
-        function reqireData() {
+        function requireData() {
             $.ajax({
                 url:"http://besttone.mobile.com/do.php",
                 cache:false,
@@ -181,6 +183,8 @@
                 console.log("关闭自动登录");
             }
         }
+
+
 
     </script>
 </div>

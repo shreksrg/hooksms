@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/jquery.mobile-1.2.0-alpha.1.min.css"/>
+    <link rel="stylesheet" href="css/bt-doc.css">
+    <script src="jscript/jquery-1.7.2.min.js"></script>
+    <script src="jscript/jquery.mobile-1.2.0-alpha.1.min.js"></script>
+
+    <title></title>
+
+</head>
+<body>
+
+<div data-role="page" id="bstHsms">
+    <div data-role="header" class="bt-header-statistics">
+        <a class="bt-btn-backprev" href="calling_list.html" data-role="none"></a>
+        <a class="bt-btn-addrecord" href="#" data-role="none"></a>
+
+        <div class="bt-headocer">挂机短信修改</div>
+    </div>
+
+    <!-- /header -->
+
+    <div data-role="content">
+        <div class="bt-content">
+            <div class="bt-hsms-option">
+                <ul>
+                    <li><span>发送时间： </span><span><dl id="beginTime" class="bt-dropdown">
+                        <dt><a href="#" data-role="none"><span>00:00</span></a></dt>
+                        <dd>
+                            <ul></ul>
+                        </dd>
+                        <input name="year" type="hidden" value="">
+                    </dl></span><span>&nbsp至&nbsp</span><span><dl id="endTime" class="bt-dropdown">
+                        <dt><a href="#" data-role="none"><span>24:00</span></a></dt>
+                        <dd>
+                            <ul></ul>
+                        </dd>
+                        <input name="year" type="hidden" value="">
+                    </dl></span></li>
+                    <li>通话状态： <span>所有来电</span></li>
+                    <li><span>重发策略： </span><span><dl id="selStrategy" class="bt-dropdown">
+                        <dt><a href="#" data-role="none"><span>不限周期</span></a></dt>
+                        <dd>
+                            <ul></ul>
+                        </dd>
+                        <input name="year" type="hidden" value="">
+                    </dl></span></li>
+                    <li><span>短信模板： </span><span><dl id="selTemplate" class="bt-dropdown">
+                        <dt><a href="#" data-role="none"><span>AM</span></a></dt>
+                        <dd>
+                            <ul></ul>
+                        </dd>
+                        <input name="year" type="hidden" value="">
+                    </dl></span></li>
+                </ul>
+            </div>
+            <div class="bt-hsms-input">
+                <div class="bt-hsms-count">短信内容 <span bstname="curWords">0</span>/70 字<a data-role="none"
+                                                                                         bstname="cleartxt"
+                                                                                         class="btn-clear bt-btn-commShaRad1"
+                                                                                         href="">清空</a></div>
+                <div><textarea class="bt-smstextarea bt-input-commShaRad1" name="smscontent" id="textarea-a"
+                               data-role="none"></textarea>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+    <!-- /content -->
+
+
+    <div data-role="footer" data-theme="none" data-position="fixed" class="bt-footer">
+        <div class="splitline"></div>
+        <div class="bt-footer-quiter">
+            <span class="srvnum">客服热线：4008111986</span><a data-role="none" class="btn-quit" href="#">退出</a>
+        </div>
+    </div>
+    <script type="text/javascript" src="jscript/init.js"></script>
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+
+            var selBeginTime = new abstractTimeSelector("beginTime");
+            selBeginTime.setAppendElement("asc");
+            selBeginTime.bindClickText();
+            selBeginTime.bindClickOption();
+
+            var selEndTime = new abstractTimeSelector("endTime");
+            selEndTime.setAppendElement("desc");
+            selEndTime.bindClickText();
+            selEndTime.bindClickOption();
+
+            var selEndTime = new abstractOptionSelector("selStrategy");
+            selEndTime.setAppendElement([{text:'不限周期',value:'0'},{text:'1周',value:'1'},{text:'2周',value:'2'}]);
+            selEndTime.bindClickText();
+            selEndTime.bindClickOption();
+
+            var selEndTime = new abstractOptionSelector("selTemplate");
+            selEndTime.setAppendElement([{text:'AM',value:'0'},{text:'PM',value:'1'}]);
+            selEndTime.bindClickText();
+            selEndTime.bindClickOption();
+
+            $('a[bstname=cleartxt]').bind('click', function () {
+                $('textarea[name=smscontent]').val(null);
+                $('span[bstname=curWords]').html(0);
+            })
+
+            /*-- 统计输入字数*/
+            $('textarea[name=smscontent]').jitchange(function () {
+                countWordsNum();
+            });
+
+        });
+
+        /*-- 清空输入的短信文本*/
+
+
+    </script>
+
+</div>
+<!-- /page -->
+
+</body>
+</html>
+
+
+
+

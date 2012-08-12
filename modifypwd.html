@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/jquery.mobile-1.2.0-alpha.1.min.css"/>
+    <link rel="stylesheet" href="css/bt-doc.css">
+    <script src="jscript/jquery-1.7.2.min.js"></script>
+    <script src="jscript/jquery.mobile-1.2.0-alpha.1.min.js"></script>
+    <title></title>
+
+</head>
+<body>
+
+<div data-role="page" id="bstStatistics">
+    <div data-role="header" class="bt-header-statistics">
+        <a class="bt-btn-backprev" href="controler.html" data-role="none"></a>
+        <a class="bt-btn-addrecord savepwd" bstname="savemodpwd" href="#" data-role="none"></a>
+
+        <div class="bt-headocer">修改密码</div>
+    </div>
+
+    <!-- /header -->
+
+
+    <div data-role="content">
+        <div class="bt-content">
+            <div class="bt-statisesms-option">
+                <form action="">
+                    <ul class="bt-modpwd-option">
+                        <li>当前密码 ： <span><input name="curpwd" data-role="none" type="password"></span></li>
+                        <li>新&nbsp 密&nbsp 码 ： <span><input name="newpwd" data-role="none" type="password"></span></li>
+                        <li>确认密码 ：<span><input name="confpwd" data-role="none" type="password"></span></li>
+                    </ul>
+                </form>
+            </div>
+
+        </div>
+
+
+    </div>
+    <!-- /content -->
+
+
+    <div data-role="footer" data-theme="none" data-position="fixed" class="bt-footer">
+        <div class="splitline"></div>
+        <div class="bt-footer-quiter">
+            <span class="srvnum">客服热线：4008111986</span><a data-role="none" class="btn-quit" href="#">退出</a>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        $("form").bind("submit", function () {
+            return false;
+            $_this = $(this);
+            $.ajax({
+                url:"http://besttone.mobile.com/do.php",
+                cache:false,
+                dataType:'json',
+                type:"post",
+                data:$_this.serializeArray(),
+                success:function (r) {
+                    console.log(r.curpwd);
+                }
+            });
+            return false
+        });
+
+        $('a[bstname=savemodpwd]').bind("click", function () {
+            var curpwd = $('input[name=curpwd]').val();
+            var newpwd = $('input[name=newpwd]').val();
+            var confpwd = $('input[name=confpwd]').val();
+
+            if (curpwd == "") {
+                alert("请输入当前密码")
+                return false;
+            }
+
+            if (newpwd == "") {
+                alert("请输入新密码")
+                return false;
+            }
+
+            if (newpwd.length < 6) {
+                alert("新密码不能少于6位")
+                return false;
+            }
+
+            if (confpwd == "") {
+                alert("请输入确认密码")
+                return false;
+            }
+
+            if (confpwd.length < 6) {
+                alert("确认密码不能少于6位")
+                return false;
+            }
+
+            if (newpwd != confpwd) {
+                alert("新密码和确认密码不一致，请检查")
+                return false;
+            }
+
+            $("form").submit();
+            return;
+
+        })
+
+
+    </script>
+
+</div>
+<!-- /page -->
+
+</body>
+</html>
+
+
+
+
