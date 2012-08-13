@@ -23,8 +23,9 @@
     <!-- /header -->
 
     <div class="bt-tip-switch">
-        <a href="count_called.html" class="btn-smscount" data-role="none">来电统计</a><a data-role="none" class="btn-callcount txtcolor"
-                                                                     href="#">短信统计</a>
+        <a href="count_called.html" class="btn-smscount" data-role="none">来电统计</a><a data-role="none"
+                                                                                     class="btn-callcount txtcolor"
+                                                                                     href="#">短信统计</a>
     </div>
 
 
@@ -82,22 +83,19 @@
             <span class="srvnum">客服热线：4008111986</span><a data-role="none" class="btn-quit" href="#">退出</a>
         </div>
     </div>
-    <script type="text/javascript" src="jscript/init.js"></script>
+
     <script type="text/javascript">
 
-        $(document).ready(function () {
+        var selorYear = new abstractDateSelector("selYear");
+        selorYear.setAppendElement({'min':2000, 'max':2012});
+        selorYear.bindClickText();
+        selorYear.bindClickOption();
 
-            var selorYear = new abstractDateSelector("selYear");
-            selorYear.setAppendElement({'min':2000, 'max':2012});
-            selorYear.bindClickText();
-            selorYear.bindClickOption();
+        var selorMonth = new abstractDateSelector("selMonth");
+        selorMonth.setAppendElement({'min':1, 'max':12});
+        selorMonth.bindClickText();
+        selorMonth.bindClickOption();
 
-            var selorMonth = new abstractDateSelector("selMonth");
-            selorMonth.setAppendElement({'min':1, 'max':12});
-            selorMonth.bindClickText();
-            selorMonth.bindClickOption();
-
-        });
     </script>
 
 </div>

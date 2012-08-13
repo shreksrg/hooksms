@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/bt-doc.css">
     <script src="jscript/jquery-1.7.2.min.js"></script>
     <script src="jscript/jquery.mobile-1.2.0-alpha.1.min.js"></script>
-    <title>jQuery Mobile: Demos and Documentation</title>
+    <title>百事通挂机短信</title>
 
 </head>
 <body>
@@ -19,7 +19,6 @@
     </div>
 
     <!-- /header -->
-
 
 
     <div data-role="content">
@@ -54,69 +53,16 @@
     </div>
     <script type="text/javascript">
 
-        function abstractDateSelector(id) {
-            var _this = this;
-            _this.id = null;
-            var setID = function () {
-                _this.id = id;
-            };
+        var selorYear = new abstractDateSelector("selYear");
+        selorYear.setAppendElement({'min':2000, 'max':2012});
+        selorYear.bindClickText();
+        selorYear.bindClickOption();
 
-            this.setAppendElement = function (setting) {
-                var min = setting.min;
-                var max = setting.max;
-                for (var i = min; i <= max; i++) {
-                    var ali = '<li><a href="#">' + i + '</a></li>';
-                    $(ali).prependTo('#' + _this.id + ' dd ul').find("a").data("value", i);
-                }
-            };
+        var selorMonth = new abstractDateSelector("selMonth");
+        selorMonth.setAppendElement({'min':1, 'max':12});
+        selorMonth.bindClickText();
+        selorMonth.bindClickOption();
 
-            this.bindClickText = function () {
-                $('#' + _this.id + ' dt a').click(function () {
-                    $('.bt-dropdown').not($('#' + _this.id)[0]).find('dd ul').hide();
-                    $('#' + _this.id + ' dd ul').toggle();
-                });
-            };
-
-            this.bindClickOption = function () {
-                $('#' + _this.id + ' dd ul li a').click(function () {
-                    var text = $(this).html();
-                    $('#' + _this.id + ' dt a span').html(text);
-                    $('#' + _this.id + ' dd ul').hide();
-                    _this.setSelectedValue($(this));
-                });
-            };
-
-            this.setSelectedValue = function (e) {
-                $('input[name=year]').val(e.data("value"));
-            };
-
-            this.bindDocumentClick = function () {
-                $(document).bind('click', function (e) {
-                    var $clicked = $(e.target);
-                    if (!$clicked.parents().hasClass("bt-dropdown"))
-                        $('#' + id + ' dd ul').hide();
-                });
-            };
-
-            var init = function () {
-                setID();
-                _this.bindDocumentClick();
-            }()
-        }
-
-        $(document).ready(function () {
-
-            var selorYear = new abstractDateSelector("selYear");
-            selorYear.setAppendElement({'min':2000, 'max':2012});
-            selorYear.bindClickText();
-            selorYear.bindClickOption();
-
-            var selorMonth = new abstractDateSelector("selMonth");
-            selorMonth.setAppendElement({'min':1, 'max':12});
-            selorMonth.bindClickText();
-            selorMonth.bindClickOption();
-
-        });
     </script>
 
 </div>
