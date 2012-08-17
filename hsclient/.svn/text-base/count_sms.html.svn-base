@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/jquery.mobile-1.2.0-alpha.1.min.css"/>
+    <link rel="stylesheet" href="css/bt-doc.css">
+    <script src="jscript/jquery-1.7.2.min.js"></script>
+    <script src="jscript/jquery.mobile-1.2.0-alpha.1.min.js"></script>
+
+
+    <title>百事通挂机短信</title>
+
+</head>
+<body>
+
+<div data-role="page" id="bstStatistics">
+    <div data-role="header" class="bt-header-statistics">
+        <div><a class="bt-btn-backprev" href="controler.html"></a></div>
+        <div class="bt-headocer">数据统计</div>
+    </div>
+
+    <!-- /header -->
+
+    <div class="bt-tip-switch">
+        <a href="count_called.html" class="btn-smscount" data-role="none">来电统计</a><a data-role="none"
+                                                                                     class="btn-callcount txtcolor"
+                                                                                     href="#">短信统计</a>
+    </div>
+
+
+    <div data-role="content">
+        <div class="bt-content">
+            <div class="bt-count-dateselection">
+                <ul>
+                    <li>
+                        <dl id="selYear" class="bt-dropdown">
+                            <dt><a href="#" data-role="none"><span>2012</span></a></dt>
+                            <dd>
+                                <ul></ul>
+                            </dd>
+                            <input name="year" type="hidden" value="">
+                        </dl>
+                    </li>
+                    <li class="labDate">年</li>
+                    <li>
+                        <dl id="selMonth" class="bt-dropdown">
+                            <dt><a href="#" data-role="none"><span>1</span></a></dt>
+                            <dd>
+                                <ul></ul>
+                            </dd>
+                            <input name="year" type="hidden" value="">
+                        </dl>
+                    </li>
+                    <li class="labDate">月</li>
+                    <li><a class="bt-btn-seeker" href="#" data-role="none">查询</a></li>
+                    <li></li>
+                </ul>
+
+            </div>
+
+            <div class="bt-statisesms-option">
+                <ul>
+                    <li>当月套餐: 200</li>
+                    <li>已用短信: 77</li>
+                    <li>剩余短信：130</li>
+                    <li>超出短信：上海手机公司</li>
+                    <li>超出费用：A</li>
+                    <li class="extraprice">套餐外单价：0.15(元/条)</li>
+                </ul>
+            </div>
+
+        </div>
+
+
+    </div>
+    <!-- /content -->
+
+
+    <div data-role="footer" data-theme="none" data-position="fixed" class="bt-footer">
+        <div class="splitline"></div>
+        <div class="bt-footer-quiter">
+            <span class="srvnum">客服热线：4008111986</span><a data-role="none" class="btn-quit" href="#">退出</a>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+
+        var selorYear = new abstractDateSelector("selYear");
+        selorYear.setAppendElement({'min':2000, 'max':2012});
+        selorYear.bindClickText();
+        selorYear.bindClickOption();
+
+        var selorMonth = new abstractDateSelector("selMonth");
+        selorMonth.setAppendElement({'min':1, 'max':12});
+        selorMonth.bindClickText();
+        selorMonth.bindClickOption();
+
+
+    </script>
+
+</div>
+<!-- /page -->
+
+</body>
+</html>
+
+
+
+

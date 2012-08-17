@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/jquery.mobile-1.2.0-alpha.1.min.css"/>
+    <link rel="stylesheet" href="css/bt-doc.css">
+    <script src="jscript/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="jscript/init.js"></script>
+    <script src="jscript/jquery.mobile-1.2.0-alpha.1.min.js"></script>
+    <title>百事通挂机短信</title>
+
+</head>
+<body>
+
+<div data-role="page" id="bstStatistics">
+    <div data-role="header" class="bt-header-statistics">
+        <div><a class="bt-btn-backprev" href="controler.html"></a></div>
+        <div class="bt-headocer">数据统计</div>
+    </div>
+
+    <!-- /header -->
+
+
+    <div class="bt-tip-switch">
+        <a data-role="none" class="btn-callcount" href="count_sms.html">短信统计</a><a href="#"
+                                                                                   class="btn-smscount txtcolor"
+                                                                                   data-role="none">来电统计</a>
+    </div>
+
+
+    <div data-role="content">
+        <div class="bt-content">
+            <div class="bt-count-dateselection">
+                <ul>
+                    <li>
+                        <dl id="selYear" class="bt-dropdown">
+                            <dt><a href="#selectMenu" data-role="none" data-rel="popup"><span>2012</span></a></dt>
+                            <dd>
+                                <ul></ul>
+                            </dd>
+                            <input name="year" type="hidden" value="">
+                        </dl>
+                    </li>
+                    <li class="labDate">年</li>
+                    <li>
+                        <dl id="selMonth" class="bt-dropdown">
+                            <dt><a href="#selectMenu" data-role="none" data-rel="popup"><span>1</span></a></dt>
+                            <dd>
+                                <ul></ul>
+                            </dd>
+                            <input name="year" type="hidden" value="">
+                        </dl>
+                    </li>
+                    <li class="labDate">月</li>
+                    <li><a class="bt-btn-seeker" href="#" data-role="none">查询</a></li>
+                    <li></li>
+                </ul>
+
+            </div>
+
+            <div class="bt-statisesms-option">
+                <ul>
+                    <li>来电总数 : <span>73</span></li>
+                    <li>已接来电 : <span>73</span></li>
+                    <li>未接来电 ：<span>73</span></li>
+
+                </ul>
+            </div>
+
+        </div>
+
+
+    </div>
+    <!-- /content -->
+
+    <style type="text/css">
+
+    </style>
+
+    <div data-role="footer" data-theme="none" data-position="fixed" class="bt-footer">
+        <div class="splitline"></div>
+        <div class="bt-footer-quiter">
+            <span class="srvnum">客服热线：4008111986</span><a data-role="none" class="btn-quit" href="#">退出</a>
+        </div>
+    </div>
+
+    <div data-role="popup" id="selectMenu" data-overlay-theme="a" data-theme="c" style="min-width:60%;"
+         class="ui-corner-all">
+        <div data-role="header" data-theme="b" class="ui-corner-top">
+            <h3 pmt="heading">选择日期</h3>
+        </div>
+        <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+            <div class="optSelMenu">
+                <ul class="optSelectMenu"></ul>
+            </div>
+
+            <a href="#" data-role="button" data-rel="back" data-mini="true">取消</a>
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+
+        loginValidor.reqValidate(); //-- 验证登录;
+        var dateSelector = new abstractDateSelector()
+
+        $('#selYear dt a').bind('click', function () {
+            var $_this = $(this);
+            dateSelector.init({min:2000, max:2012});
+            dateSelector.eventClickOptions = function () {
+                $_this.find('span').html(this.txtOption);
+                $('input[name=year]').val(this.valueOption);
+            }
+        })
+
+        $('#selMonth dt a').bind('click', function () {
+            var $_this = $(this);
+            dateSelector.init({min:1, max:12});
+            dateSelector.eventClickOptions = function () {
+                $_this.find('span').html(this.txtOption);
+                $('input[name=month]').val(this.valueOption);
+            }
+        })
+
+    </script>
+
+</div>
+<!-- /page -->
+
+</body>
+</html>
+
+
+
+

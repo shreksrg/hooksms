@@ -1,0 +1,193 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/jquery.mobile-1.2.0-alpha.1.min.css"/>
+    <link rel="stylesheet" href="css/bt-doc.css">
+    <script src="jscript/jquery-1.7.2.min.js"></script>
+    <script src="jscript/jquery.mobile-1.2.0-alpha.1.min.js"></script>
+    <script type="text/javascript" src="jscript/init.js"></script>
+
+    <title>百事通挂机短信</title>
+</head>
+<body class="bt-body-c">
+
+<div data-role="page" id="bstLogin">
+
+    <div data-role="header" class="bt-header-login">
+        <span class="bt-logo"></span>
+        <span class="bt-docuterm">挂机短信</span>
+    </div>
+    <!-- /header -->
+
+    <div data-role="content" class="bt-login-bgurl">
+        <div class="bt-content">
+            <div class="bt-login-form">
+                <div class="hrline"><span class="loginLabel">账号：</span><span class="loginTxt"><input type="text"
+                                                                                                     data-role="none"
+                                                                                                     name="account"
+                                                                                                     value=""></span>
+                </div>
+                <div><span class="loginLabel">密码：</span><span class="loginTxt"><input type="password" data-role="none"
+                                                                                      name="password"
+                                                                                      value=""></span>
+                </div>
+            </div>
+            <div class="bt-btn-login">
+                <a id="btnLogin" class="bt-btn bt-btn-gradient-blue1 bt-btn-corner-all bt-btn-text btn-login"
+                   data-role="none"
+                   href="#">登录</a>
+
+            </div>
+            <div class="bt-login-setting">
+                <div class="forgetpwd"><a id="btnFgpwd" href="#">忘记密码</a></div>
+                <div class="autologin">
+                    <span>
+                        <select name="slider" id="slider" data-role="slider" data-mini="true">
+                            <option value="off">Off</option>
+                            <option value="on">On</option>
+                        </select>
+                    </span>
+                    <span class="autoLabel">自动登录</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /content -->
+
+    <div data-role="footer" data-theme="none" data-position="fixed" class="bt-footer">
+        <p class="bt-srvnumber" style="text-align:center">
+		<a href="wtai://wp/mc;4008111986">
+			客服热线4008111986
+		</a>
+		</p>
+    </div>
+
+
+    <!-- /footer -->
+
+
+    <div data-role="popup" id="popuptip" data-overlay-theme="a" data-theme="c" style="min-width:256px;"
+         class="ui-corner-all">
+        <div data-role="header" data-theme="b" class="ui-corner-top">
+            <h1 pmt="heading">警告</h1>
+        </div>
+        <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+            <p class="bt-popup-content" pmt="content"></p>
+            <div class="ui-grid-solo">
+                <div class="ui-block-a">
+                    <a bstname="delConfig" type="button" data-theme="b" data-mini="true" data-rel="back">确定</a>
+                </div>
+            </div>
+            <div class="clearline-8"></div>
+        </div>
+    </div>
+
+    <!-- /popup-->
+
+    <script type="text/javascript">
+
+        var $divDOM = $('#popuptip');
+        $divDOM.title = $divDOM.find('h1[pmt=heading]');
+        $divDOM.content = $divDOM.find('p[pmt=content]');
+        var domPOP = new _iPOPUPS($divDOM);
+
+
+        /*
+         * 忘记密码
+         * */
+
+        $('#btnFgpwd').bind('click', function () {
+            domPOP.setTitle("忘记密码")
+            domPOP.setContent("请联系客服：4008111986");
+            domPOP.openPopups();
+            return false;
+        })
+
+
+        /*
+         * 用户登录
+         * */
+
+        $("#btnLogin").bind("click", function () {
+            var account = $('input[name=account]').val();
+            var password = $('input[name=password]').val();
+            domPOP.setTitle("警告");
+            if (account == "") {
+                domPOP.setContent("请输入账号");
+                domPOP.openPopups();
+                return false;
+            }
+            if (password == "") {
+                domPOP.setContent("请输入密码");
+                domPOP.openPopups();
+                return false;
+            }
+
+            $.mobile.changePage("description.html");
+
+            return
+            requireData(); // 提交表单
+
+        })
+
+
+        /*
+         * 提交数据并相应返回
+         * */
+
+        function requireData() {
+            $.ajax({
+                url:"http://besttone.mobile.com/do.php",
+                cache:false,
+                dataType:'json',
+                type:"post",
+                data:$("form").serializeArray(),
+                success:function (r) {
+                    respondHandle(r);
+                    // console.log(r.checked);
+                }
+            });
+        }
+
+        /*
+         * 输出处理结果
+         * */
+
+        function respondHandle(r) {
+            if (r.checked == 1) {
+                $.mobile.changePage("warning.html");
+            } else if (r.checked == 0) {
+                domPOP.setTitle("错误");
+                domPOP.setContent("用户名或密码错误");
+                domPOP.openPopups();
+                return false;
+            }
+        }
+
+
+        /*
+         *  自动登录开关
+         * */
+        $("#slider").bind("change", function () {
+            setAutoLogin($(this).val());
+        })
+
+
+        function setAutoLogin(v) {
+            if (v == "on") {
+                console.log("开启自动登录")
+            }
+            if (v == "off") {
+                console.log("关闭自动登录");
+            }
+        }
+
+
+    </script>
+</div>
+<!-- /page -->
+
+</body>
+</html>

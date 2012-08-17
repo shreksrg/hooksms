@@ -1,0 +1,161 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/jquery.mobile-1.2.0-alpha.1.min.css"/>
+    <link rel="stylesheet" href="css/bt-doc.css">
+    <script src="jscript/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="jscript/init.js"></script>
+    <script type="text/javascript">
+        var domPOP;
+        $(function () {
+            $("#bstLogin").bind('pageshow', function () {
+                domPOP = new _TipPOPUPS($('#popuptip'));
+            })
+        })
+    </script>
+    <script src="jscript/jquery.mobile-1.2.0-alpha.1.min.js"></script>
+
+
+    <title>百事通挂机短信</title>
+</head>
+<body class="bt-body-c">
+
+<div data-role="page" id="bstLogin">
+
+    <div data-role="header" class="bt-header-login">
+        <span class="bt-logo"></span>
+        <span class="bt-docuterm">挂机短信</span>
+    </div>
+    <!-- /header -->
+
+    <div data-role="content" class="bt-login-bgurl">
+        <div class="bt-content">
+            <div class="bt-login-form">
+                <form action="">
+                    <div class="hrline"><span class="loginLabel">账号：</span><span class="loginTxt"><input type="text"
+                                                                                                         data-role="none"
+                                                                                                         name="account"
+                                                                                                         value=""></span>
+                    </div>
+                    <div><span class="loginLabel">密码：</span><span class="loginTxt"><input type="password"
+                                                                                          data-role="none"
+                                                                                          name="password"
+                                                                                          value=""></span>
+                    </div>
+                </form>
+            </div>
+            <div class="bt-btn-login">
+                <a href="#" id="btnLogin" class="bt-btn bt-btn-gradient-blue1 bt-btn-corner-all bt-btn-text btn-login"
+                   data-role="none"
+                   href="#">登录</a>
+
+            </div>
+            <div class="bt-login-setting">
+                <div class="forgetpwd"><a id="btnFgpwd" href="#">忘记密码</a></div>
+                <div class="autologin">
+                    <span>
+                        <select name="slider" id="slider" data-role="slider" data-mini="true">
+                            <option value="off">Off</option>
+                            <option value="on">On</option>
+                        </select>
+                    </span>
+                    <span class="autoLabel">自动登录</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /content -->
+
+    <div data-role="footer" data-theme="none" data-position="fixed" class="bt-footer">
+        <p class="bt-srvnumber" style="text-align:center">客户热线 4008111986</p>
+    </div>
+
+
+    <!-- /footer -->
+
+    <div data-role="popup" id="popuptip" data-overlay-theme="a" data-theme="c" style="min-width:256px;"
+         class="ui-corner-all">
+        <div data-role="header" data-theme="b" class="ui-corner-top">
+            <h1 pmt="heading">警告</h1>
+        </div>
+        <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+            <p class="bt-popup-content" pmt="content"></p>
+
+            <div class="ui-grid-solo">
+                <div class="ui-block-a">
+                    <a bstname="delConfig" type="button" data-theme="b" data-mini="true" data-rel="back">确定</a>
+                </div>
+            </div>
+            <div class="clearline-8"></div>
+        </div>
+    </div>
+
+    <!-- /popup-->
+
+    <script type="text/javascript">
+
+        /*
+         * 忘记密码
+         * */
+
+        $('#btnFgpwd').bind('click', function () {
+            console.log('shrek,im')
+            domPOP.setTitle("忘记密码")
+            domPOP.setContent("请联系客服：4008111986");
+            domPOP.openPopups();
+            return false;
+        })
+
+        /*
+         * 用户登录
+         * */
+
+        $("#btnLogin").bind("click", function () {
+            var account = $('input[name=account]').val();
+            var password = $('input[name=password]').val();
+            domPOP.setTitle("警告");
+            if (account == "") {
+                domPOP.setContent("请输入账号");
+                domPOP.openPopups();
+                return false;
+            }
+            if (password == "") {
+                domPOP.setContent("请输入密码");
+                domPOP.openPopups();
+                return false;
+            }
+
+            /*-- 提交账户信息*/
+
+            var url = 'do.html';
+            $.post(url, $('form').serializeArray(), function (r) {
+                r = {uid:888};
+                UID = r.uid; //-- 返回用户ID
+                $.mobile.changePage("description.html");
+            })
+            return false;
+        })
+
+
+        /*
+         *  自动登录开关
+         * */
+
+
+        $("#slider").bind("change", function () {
+            var url = "do.html";
+            var data = {state:$(this).val()}
+            $.post(url, data, function (r) {
+                console.log(r); //-- 打印发返回
+            })
+        })
+
+
+    </script>
+</div>
+<!-- /page -->
+
+</body>
+</html>

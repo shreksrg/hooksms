@@ -1,0 +1,181 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/jquery.mobile-1.2.0-alpha.1.min.css"/>
+    <link rel="stylesheet" href="css/bt-doc.css">
+    <script src="jscript/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="jscript/init.js"></script>
+    <script src="jscript/jquery.mobile-1.2.0-alpha.1.min.js"></script>
+
+
+    <title>百事通挂机短信</title>
+
+</head>
+<body>
+
+<div data-role="page" id="bstStatistics">
+    <div data-role="header" class="bt-header-statistics">
+        <div><a class="bt-btn-backprev" href="controler.html"></a></div>
+        <div class="bt-headocer">数据统计</div>
+    </div>
+
+    <!-- /header -->
+
+    <div class="bt-tip-switch">
+        <a href="count_called.html" class="btn-smscount" data-role="none">来电统计</a><a data-role="none"
+                                                                                     class="btn-callcount txtcolor"
+                                                                                     href="#">短信统计</a>
+    </div>
+
+
+    <div data-role="content">
+        <div class="bt-content">
+            <div class="bt-count-dateselection">
+                <ul>
+                    <li>
+                        <dl id="selYear" class="bt-dropdown">
+                            <dt><a href="#selectMenu" data-rel="popup" data-role="none"><span
+                                    bstTag="selYear">2012</span></a></dt>
+                            <dd>
+                                <ul></ul>
+                            </dd>
+                            <input name="year" type="hidden" value="">
+                        </dl>
+                    </li>
+                    <li class="labDate">年</li>
+                    <li>
+                        <dl id="selMonth" class="bt-dropdown">
+                            <dt><a href="#selectMenu" data-rel="popup" data-role="none"><span bstTag="selMonth">1</span></a>
+                            </dt>
+                            <dd>
+                                <ul></ul>
+                            </dd>
+                            <input name="year" type="hidden" value="">
+                        </dl>
+                    </li>
+                    <li class="labDate">月</li>
+                    <li><a bstname="btnSeeker" class="bt-btn-seeker" href="#" data-role="none">查询</a></li>
+                    <li></li>
+                </ul>
+
+            </div>
+
+            <div class="bt-statisesms-option">
+                <ul>
+                    <li>当月套餐: <span bstTag="edgeCurMonth">200</span></li>
+                    <li>已用短信: <span bstTag="numUsedSMS">77</span></li>
+                    <li>剩余短信： <span bstTag="numLeftSMS">130</span></li>
+                    <li>超出短信： <span bstTag="numOverSMS">46</span></li>
+                    <li>超出费用： <span bstTag="edgeOver">20</span></li>
+                    <li class="extraprice">套餐外单价：0.15(元/条)</li>
+                </ul>
+            </div>
+
+        </div>
+
+
+    </div>
+    <!-- /content -->
+
+
+    <div data-role="footer" data-theme="none" data-position="fixed" class="bt-footer">
+        <div class="splitline"></div>
+        <div class="bt-footer-quiter">
+            <span class="srvnum">客服热线：4008111986</span><a data-role="none" class="btn-quit" href="#">退出</a>
+        </div>
+    </div>
+
+
+    <div data-role="popup" id="selectMenu" data-overlay-theme="a" data-theme="c" style="min-width:60%;"
+         class="ui-corner-all">
+        <div data-role="header" data-theme="b" class="ui-corner-top">
+            <h3 pmt="heading">选择日期</h3>
+        </div>
+        <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+            <div class="optSelMenu">
+                <ul class="optSelectMenu"></ul>
+            </div>
+
+            <a href="#" data-role="button" data-rel="back" data-mini="true">取消</a>
+        </div>
+
+
+    </div>
+    <!-- /popups-->
+
+    <script type="text/javascript">
+        loginValidor.reqValidate(); //-- 验证登录;
+
+        /*
+         * 初始化短信统计
+         * */
+
+        var url = "do.html";
+        $.post(url, {uid:UID}, function (jarr) {
+            injectLayout(jarr);
+        })
+
+
+        /*-- 部署返回数据*/
+        function injectLayout(jarr) {
+            jarr = {year:2012, month:09, monedge:200, usedsms:77, leftsmsnum:33, oversmsnum:45, overedge:20}
+            $('span[bstTag=selYear]').html(jarr.year);
+            $('span[bstTag=selMonth]').html(jarr.month);
+            $('span[bstTag=edgeCurMonth]').html(jarr.monedge);
+            $('span[bstTag=numUsedSMS]').html(jarr.usedsms);
+            $('span[bstTag=numLeftSMS]').html(jarr.leftsmsnum);
+            $('span[bstTag=numOverSMS]').html(jarr.oversmsnum);
+            $('span[bstTag=edgeOver]').html(jarr.overedge);
+        }
+
+
+        /*
+         * 提交查询
+         * */
+
+        $('a[bstname=btnSeeker]').click(function () {
+            var data = $('form').serializeArray();
+            $.post(url, {uid:UID, data:data}, function (jarr) {
+                injectLayout(jarr);
+            })
+        })
+
+
+        /*
+         * 初始化日期下拉框
+         * */
+
+        var dateSelectors = new abstractDateSelector()
+
+        $('#selYear dt a').bind('click', function () {
+            var $_this = $(this);
+            dateSelectors.init({min:2000, max:2012});
+            dateSelectors.eventClickOptions = function () {
+                $_this.find('span').html(this.txtOption);
+                $('input[name=year]').val(this.valueOption);
+            }
+        })
+
+        $('#selMonth dt a').bind('click', function () {
+            var $_this = $(this);
+            dateSelectors.init({min:1, max:12});
+            dateSelectors.eventClickOptions = function () {
+                $_this.find('span').html(this.txtOption);
+                $('input[name=month]').val(this.valueOption);
+            }
+        })
+
+
+    </script>
+
+</div>
+<!-- /page -->
+
+</body>
+</html>
+
+
+
+

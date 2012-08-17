@@ -1,0 +1,248 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/jquery.mobile-1.2.0-alpha.1.min.css"/>
+    <link rel="stylesheet" href="css/bt-doc.css">
+    <script src="jscript/jquery-1.7.2.min.js"></script>
+    <!--<script type="text/javascript" src="jscript/init.js"></script>-->
+    <script src="jscript/jquery.mobile-1.2.0-alpha.1.min.js"></script>
+
+    <title>百事通挂机短信</title>
+
+</head>
+<body>
+
+<div data-role="page" id="bstHsms">
+<div data-role="header" class="bt-header-statistics">
+    <a class="bt-btn-backprev" href="calling_list.html" data-role="none"></a>
+    <a bstname="btnSMSMod" class="bt-btn-addrecord" href="#" data-role="none"></a>
+
+    <div class="bt-headocer">挂机短信修改</div>
+</div>
+
+<!-- /header -->
+
+<div data-role="content">
+    <div class="bt-content">
+
+        <form action="">
+            <div class="bt-hsms-option">
+                <ul>
+                    <li><span>发送时间： </span><span><dl id="beginTime" class="bt-dropdown">
+                        <dt><a href="#selectMenu" data-rel="popup" data-role="none"><span
+                                bstTag="fromHour">00:00</span></a></dt>
+                        <dd>
+                            <ul></ul>
+                        </dd>
+                        <input name="fromHour" type="hidden" value="0">
+                    </dl></span><span>&nbsp至&nbsp</span><span><dl id="endTime" class="bt-dropdown">
+                        <dt><a href="#selectMenu" data-rel="popup" data-role="none"><span
+                                bstTag="toHour">24:00</span></a></dt>
+                        <dd>
+                            <ul></ul>
+                        </dd>
+                        <input name="toHour" type="hidden" value="24">
+                    </dl></span></li>
+                    <li>通话状态： <span>所有来电</span></li>
+                    <li><span>重发策略： </span><span><dl id="selStrategy" class="bt-dropdown">
+                        <dt><a href="#selectMenu" data-role="none" data-rel="popup"><span
+                                bstTag="reMethod">不限周期</span></a></dt>
+                        <dd>
+                            <ul></ul>
+                        </dd>
+                        <input name="reMethod" type="hidden" value="0">
+                    </dl></span></li>
+                    <li><span>短信模板： </span><span><dl id="selTemplate" class="bt-dropdown">
+                        <dt><a href="#selectMenu" data-role="none" data-rel="popup"><span bstTag="tplSMS">AM</span></a>
+                        </dt>
+                        <dd>
+                            <ul></ul>
+                        </dd>
+                        <input name="tplSMS" type="hidden" value="0">
+                    </dl></span></li>
+                </ul>
+            </div>
+            <div class="bt-hsms-input">
+                <div class="bt-hsms-count">短信内容 <span bstname="curWords">0</span>/70 字<a data-role="none"
+                                                                                         bstname="cleartxt"
+                                                                                         class="btn-clear bt-btn-commShaRad1"
+                                                                                         href="">清空</a></div>
+                <div><textarea name="smscontent" class="bt-smstextarea"></textarea>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+
+</div>
+<!-- /content -->
+
+
+<div data-role="footer" data-theme="none" data-position="fixed" class="bt-footer">
+    <div class="splitline"></div>
+    <div class="bt-footer-quiter">
+        <span class="srvnum">客服热线：4008111986</span><a data-role="none" class="btn-quit" href="#">退出</a>
+    </div>
+</div>
+
+<!-- popups-->
+
+
+<div data-role="popup" id="selectMenu" data-overlay-theme="a" data-theme="c" style="min-width:60%;"
+     class="ui-corner-all">
+    <div data-role="header" data-theme="b" class="ui-corner-top">
+        <h3 pmt="heading">选择日期</h3>
+    </div>
+    <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+        <div class="optSelMenu">
+            <ul class="optSelectMenu"></ul>
+        </div>
+
+        <a href="#" data-role="button" data-rel="back" data-mini="true">取消</a>
+    </div>
+
+
+</div>
+
+
+<div data-role="popup" id="popuptipmmod" data-overlay-theme="a" data-theme="c" style="min-width:256px;"
+     class="ui-corner-all">
+    <div data-role="header" data-theme="b" class="ui-corner-top">
+        <h1 pmt="heading">提示</h1>
+    </div>
+    <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+        <p class="bt-popup-content" pmt="content">请输入短信内容</p>
+
+        <div class="ui-grid-solo">
+            <div class="ui-block-a">
+                <a bstname="delConfig" type="button" data-theme="b" data-mini="true" data-rel="back">确定</a>
+            </div>
+        </div>
+        <div class="clearline-8"></div>
+    </div>
+</div>
+
+<!-- /popup-->
+
+<script type="text/javascript">
+
+    loginValidor.reqValidate(); //-- 验证登录;
+    var url = "do.html";
+    /*
+     * 初始化加载
+     * */
+
+    $.post(url, {id:hookSMSId}, function (jarr) {
+        jarr = {fromhour:'02:00', tohour:'12:00', remethod:'不限周期', tplsms:'AM', sms:'欢迎致电上海移数通电讯有限公司--中国领先的移动互联信息平台服务商。挂机短信业务，一个来电，一次宣传！'}
+        $('span[bstTag=fromHour]').html(jarr.fromHour)
+        $('span[bstTag=toHour]').html(jarr.tohour)
+        $('span[bstTag=reMethod]').html(jarr.remethod)
+        $('span[bstTag=tplSMS]').html(jarr.tplsms);
+        $('textarea[name=smscontent]').val(jarr.sms);
+        $('span[bstname=curWords]').html(jarr.sms.length);
+    })
+
+
+    /*
+     * 提交修改
+     * */
+
+
+    $('a[bstname=btnSMSMod]').click(function () {
+
+        var data = $('form').serializeArray();
+        if ($('textarea[name=smscontent]').val() == "") {
+            $('#popuptipmmod').popup("open");
+            return false;
+        }
+
+        var url = "do.html"
+        $.post(url, {id:hookSMSId, item:data}, function (r) {
+            $.mobile.changePage('calling_list.html');
+        })
+    })
+
+
+    /*
+     * 初始化下拉框
+     * */
+
+    var timeSelector = new abstractTimeSelector()
+
+    $('#beginTime').delegate('dt a', 'click', function () {
+        var $_this = $(this);
+        timeSelector.init({min:0, max:24});
+        timeSelector.eventClickOptions = function () {
+            $_this.find('span').html(this.txtOption);
+            $('input[name=fromHour]').val(this.valueOption);
+        }
+    })
+
+
+    $('#endTime').delegate('dt a', 'click', function () {
+        var $_this = $(this);
+        timeSelector.init({min:0, max:24});
+        timeSelector.eventClickOptions = function () {
+            $_this.find('span').html(this.txtOption);
+            $('input[name=toHour]').val(this.valueOption);
+        }
+    })
+
+
+    var selMethod = new abstractOptionSelector([
+        {text:'不限周期', value:'0'},
+        {text:'1周', value:'1'},
+        {text:'2周', value:'2'}
+    ]);
+
+    $('#selStrategy').delegate('dt a', 'click', function () {
+        var $_this = $(this);
+        selMethod.init();
+        selMethod.eventClickOptions = function () {
+            $_this.find('span').html(this.txtOption);
+            $('input[name=reMethod]').val(this.valueOption);
+        }
+    })
+
+
+    var selTemplate = new abstractOptionSelector([
+        {text:'AM', value:'0'},
+        {text:'PM', value:'1'}
+    ]);
+
+    $('#selTemplate').delegate('dt a', 'click', function () {
+        var $_this = $(this);
+        selTemplate.init();
+        selTemplate.eventClickOptions = function () {
+            $_this.find('span').html(this.txtOption);
+            $('input[name=tplSMS]').val(this.valueOption);
+        }
+    })
+
+
+    /*-- 清空输入的短信文本*/
+    $('a[bstname=cleartxt]').bind('click', function () {
+        $('textarea[name=smscontent]').val(null);
+        $('span[bstname=curWords]').html(0);
+    })
+
+    /*-- 统计输入字数*/
+    $('textarea[name=smscontent]').jitchange(function () {
+        countWordsNum();
+    });
+
+
+</script>
+
+</div>
+<!-- /page -->
+
+</body>
+</html>
+
+
+
+

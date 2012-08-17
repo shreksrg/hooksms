@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/jquery.mobile-1.2.0-alpha.1.min.css"/>
+    <link rel="stylesheet" href="css/bt-doc.css">
+    <script src="jscript/jquery-1.7.2.min.js"></script>
+    <script src="jscript/jquery.mobile-1.2.0-alpha.1.min.js"></script>
+
+    <title>百事通挂机短信</title>
+
+</head>
+<body>
+
+<div data-role="page" id="bstTemplate">
+    <div data-role="header" class="bt-header-statistics">
+        <a class="bt-btn-backprev" href="calling_list.html" data-role="none"></a>
+        <a class="bt-btn-addrecord" href="#" data-role="none"></a>
+
+        <div class="bt-headocer">短信模版</div>
+    </div>
+
+    <!-- /header -->
+
+
+    <div data-role="content">
+        <div class="bt-content">
+
+            <div class="bt-template-list">
+                <ul>
+                    <li data-tplid=1>
+                        <div class="template-header"><span>AM</span><a bstname="tplsms" data-role="none"
+                                                                       href="#">删除</a></div>
+                        <div class="template-content"><p>
+                            欢迎致电上海移数通电讯有限公司--中国领先的移动互联信息平台服务商。挂机短信业务，一个来电，一次宣传！致电4008111986可申请体验!</p></div>
+                    </li>
+                    <li data-tplid=2>
+                        <div class="template-header"><span>AM</span><a bstname="tplsms" data-role="none" href="#">删除</a>
+                        </div>
+                        <div class="template-content"><p>
+                            欢迎致电上海移数通电讯有限公司--中国领先的移动互联信息平台服务商。挂机短信业务，一个来电，一次宣传！致电4008111986可申请体验!</p></div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bt-hsms-input hsms-padding">
+                <div class="input-title">短信模板</div>
+                <div class="bt-hsms-count">短信内容 <span bstname="curWords">0</span>/70 字<a bstname="cleartxt"
+                                                                                         data-role="none"
+                                                                                         class="btn-clear bt-btn-commShaRad1"
+                                                                                         href="">清空</a></div>
+                <div><textarea class="bt-smstextarea bt-input-commShaRad1" name="smscontent" id="textarea-a"
+                               data-role="none"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /content -->
+
+
+    <div data-role="footer" data-theme="none" data-position="fixed" class="bt-footer">
+        <div class="splitline"></div>
+        <div class="bt-footer-quiter">
+            <span class="srvnum">客服热线：4008111986</span><a data-role="none" class="btn-quit" href="#">退出</a>
+        </div>
+    </div>
+
+    <!-- /POPUP -->
+    <div data-role="popup" id="pmtpopconfig2" data-overlay-theme="a" data-theme="c" style="min-width:256px;"
+         class="ui-corner-all">
+        <div data-role="header" data-theme="b" class="ui-corner-top">
+            <h1 pmt="heading">警告</h1>
+        </div>
+        <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+            <p class="bt-popup-content" pmt="content"></p>
+
+
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                    <a bstname="delConfig" type="button" data-theme="b" data-mini="true">确定</a>
+                </div>
+                <div class="ui-block-b">
+                    <a type="button" data-rel="back" data-theme="c" data-mini="true" data-rel="back">取消</a>
+                </div>
+            </div>
+
+
+            <div class="clearline-8"></div>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        var $liSMS;
+
+        /**
+         * 初始化弹出层;
+         */
+
+        var $divDOM = $("#pmtpopconfig2");
+        $divDOM.title = $divDOM.find('h1[pmt=heading]');
+        $divDOM.content = $divDOM.find('p[pmt=content]');
+        var domPOP = new _iPOPUPS($divDOM);
+
+        /**
+         * 删除短信记录;
+         */
+
+        $('a[bstname=tplsms]').bind("click", function () {
+            $liSMS = $(this).parents("li");
+            domPOP.setTitle("删除确认")
+            domPOP.setContent("确认要删除短信记录");
+            domPOP.openPopups();
+            //delSMSTpl($li);   // 删除记录
+        })
+
+        /*-- 删除短信记录行*/
+
+        $('a[bstname=delConfig]').bind('click', function () {
+            domPOP.closePopups();  //-- 关闭弹出层
+            $liSMS.remove(); //-- 删除记录行
+        });
+
+        function delSMSTpl($el) {
+            $el.remove();
+            return false;
+            $.ajax({
+                url:deltpl.php,
+                data:$el.attr('data-tplid'),
+                success:function (r) {
+                    if (r == 0) {
+                        alert("服务处理出错,删除失败");
+                    }
+                    if (r == 1) {
+                        $el.remove();
+                        alert("删除成功")
+                    }
+                    if (r == 2) {
+                        alert("登录超时,请跳转到登录页重新登录")
+                    }
+                }
+            })
+        }
+
+
+        /*-- 清空输入的短信文本*/
+
+        $('a[bstname=cleartxt]').bind('click', function () {
+            $('textarea[name=smscontent]').val(null);
+            $('span[bstname=curWords]').html(0);
+        })
+
+        /*-- 统计输入字数*/
+        $('textarea[name=smscontent]').jitchange(function () {
+            countWordsNum();
+        });
+
+
+    </script>
+
+</div>
+<!-- /page -->
+
+</body>
+</html>
+
+
+
+

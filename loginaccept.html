@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/jquery.mobile-1.2.0-alpha.1.min.css"/>
+    <link rel="stylesheet" href="css/bt-doc.css">
+    <script src="jscript/jquery-1.7.2.min.js"></script>
+    <script src="jscript/jquery.mobile-1.2.0-alpha.1.min.js"></script>
+    <title>百事通挂机短信</title>
+
+</head>
+<body>
+<div data-role="page" class="" id="bstAcptLogin">
+    <div data-role="header" class="bt-header-control">
+        <div><a class="bt-btn-backhome" href="index.html"></a></div>
+        <div class="bt-headocer">号码百事通挂机电话</div>
+    </div>
+
+    <!-- /header -->
+
+
+    <div data-role="content">
+        <div class="bt-content">
+            <div class="bt-accept-login">
+                <form action="">
+                    <ul>
+                        <li><input class="bt-input-commShaRad1" type="text" data-role="none" name="acp-account"
+                                   maxlength="28"><label
+                                for="">账号:</label></li>
+                        <li><input class="bt-input-commShaRad1" type="text" data-role="none" name="acp-password"
+                                   maxlength="28"><label for="">密码:</label></li>
+                    </ul>
+                </form>
+            </div>
+            <div class="bt-accept-button"><span><a data-role="none" bstname="btnAcceptlogin"
+                                                   class="bt-btn bt-btn-gradient-green1 bt-btn-corner-all bt-btn-text"
+                                                   href="#">确认</a></span><span><a data-role="none"
+                                                                                  class="bt-btn bt-btn-gradient-blue1 bt-btn-corner-all bt-btn-text"
+                                                                                  href="description.html">取消</a></span>
+            </div>
+        </div>
+
+    </div>
+    <!-- /content -->
+
+    <div data-role="popup" id="popupconfig1" data-overlay-theme="a" data-theme="c" style="min-width:256px;"
+         class="ui-corner-all">
+        <div data-role="header" data-theme="b" class="ui-corner-top">
+            <h1 pmt="heading">警告</h1>
+        </div>
+        <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+            <p class="bt-popup-content" pmt="content"></p>
+
+            <div class="ui-grid-solo">
+                <div class="ui-block-a">
+                    <a bstname="delConfig" type="button" data-theme="b" data-mini="true" data-rel="back">确定</a>
+                </div>
+            </div>
+
+            <div class="clearline-8"></div>
+        </div>
+    </div>
+
+    <!-- /popup-->
+    <script type="text/javascript">
+
+        domPOP = new _TipPOPUPS($('#popupconfig1'));
+
+        /*
+         * 用户登录
+         * */
+
+        $("a[bstname=btnAcceptlogin]").bind("click", function () {
+            var account = $('input[name=acp-account]').val();
+            var password = $('input[name=acp-password]').val();
+            domPOP.setTitle("警告");
+            if (account == "") {
+                domPOP.setContent("请输入账号");
+                domPOP.openPopups();
+                return false;
+            }
+            if (password == "") {
+                domPOP.setContent("请输入密码");
+                domPOP.openPopups();
+                return false;
+            }
+
+            /*-- 提交表单*/
+            var url = 'http://localhost/orderMobi/assets/www/hooksms2/do.php';
+            $.post(url, $('form').serializeArray(), function (r) {
+                console.log(r);
+                $.mobile.changePage("controler.html");
+            })
+        })
+
+    </script>
+
+
+</div>
+<!-- /page -->
+
+
+</body>
+</html>
+
+
+
+
+

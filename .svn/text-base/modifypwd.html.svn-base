@@ -1,0 +1,153 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/jquery.mobile-1.2.0-alpha.1.min.css"/>
+    <link rel="stylesheet" href="css/bt-doc.css">
+    <script src="jscript/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="jscript/init.js"></script>
+    <script src="jscript/jquery.mobile-1.2.0-alpha.1.min.js"></script>
+    <title>百事通挂机短信</title>
+
+</head>
+<body>
+
+<div data-role="page" id="bstStatistics">
+    <div data-role="header" class="bt-header-statistics">
+        <a class="bt-btn-backprev" href="controler.html" data-role="none"></a>
+        <a class="bt-btn-addrecord savepwd" bstname="savemodpwd" href="#" data-role="none"></a>
+
+        <div class="bt-headocer">修改密码</div>
+    </div>
+
+    <!-- /header -->
+
+
+    <div data-role="content">
+        <div class="bt-content">
+            <div class="bt-statisesms-option">
+                <form action="">
+                    <ul class="bt-modpwd-option">
+                        <li>当前密码 ： <span><input name="curpwds" data-role="none" type="password" value=""></span></li>
+                        <li>新&nbsp 密&nbsp 码 ： <span><input name="newpwd" data-role="none" type="password"
+                                                           value=""></span></li>
+                        <li>确认密码 ：<span><input name="confpwd" data-role="none" type="password" value=""></span></li>
+                    </ul>
+                </form>
+            </div>
+
+        </div>
+
+
+    </div>
+    <!-- /content -->
+
+
+    <div data-role="footer" data-theme="none" data-position="fixed" class="bt-footer">
+        <div class="splitline"></div>
+        <div class="bt-footer-quiter">
+            <span class="srvnum">客服热线：4008111986</span><a data-role="none" class="btn-quit" href="#">退出</a>
+        </div>
+    </div>
+
+    <div data-role="popup" id="popuptipss" data-overlay-theme="a" data-theme="c" style="min-width:256px;"
+         class="ui-corner-all">
+        <div data-role="header" data-theme="b" class="ui-corner-top">
+            <h1 pmt="heading">提示</h1>
+        </div>
+        <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+            <p class="bt-popup-content" pmt="content" style="padding:0.5em 0"></p>
+
+            <div class="ui-grid-solo">
+                <div class="ui-block-a">
+                    <a bstname="delConfig" type="button" data-theme="b" data-mini="true" data-rel="back">确定</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- /popup-->
+    <script type="text/javascript">
+
+        loginValidor.reqValidate(); //-- 验证登录;
+
+        var $pop = $('#popuptipss');
+        var $content = $pop.find('p[pmt=content]');
+        var url = "do.html";
+        /*
+         * 提交修改
+         * */
+
+        function reqModifyPassword() {
+            var data = $('form').serializeArray();
+            url = "do.html";
+            $.post(url, data, function (r) {
+                console.log(r);
+                $content.html("修改密码成功")
+                $pop.popup('open');
+            })
+        }
+
+
+        $('a[bstname=savemodpwd]').bind("click", function () {
+
+            var pwdOld = $('input[name=curpwds]').val();
+            var pwdNew = $('input[name=newpwd]').val();
+            var pwdConfig = $('input[name=confpwd]').val();
+
+
+            if (pwdOld == "") {
+                $content.html("请输入旧密码")
+                $pop.popup('open');
+                return false;
+            }
+
+            if (pwdNew == "") {
+                $content.html("请输入新密码")
+                $pop.popup('open');
+                return false;
+            }
+
+            if (pwdNew.length < 6) {
+                $content.html("新密码不能少于6位")
+                $pop.popup('open');
+                return false;
+            }
+
+            if (pwdConfig == "") {
+                $content.html("请输入确认密码")
+                $pop.popup('open');
+                return false;
+            }
+
+            if (pwdConfig.length < 6) {
+                $content.html("确认密码不能少于6位")
+                $pop.popup('open');
+                return false;
+            }
+
+            if (pwdNew != pwdConfig) {
+                $content.html("新密码和确认密码不一致，请检查")
+                $pop.popup('open');
+                return false;
+            }
+
+            reqModifyPassword();
+            return;
+
+        })
+
+
+    </script>
+
+</div>
+<!-- /page -->
+
+</body>
+</html>
+
+
+
+

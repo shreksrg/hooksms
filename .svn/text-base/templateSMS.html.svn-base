@@ -1,0 +1,246 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/jquery.mobile-1.2.0-alpha.1.min.css"/>
+    <link rel="stylesheet" href="css/bt-doc.css">
+    <script src="jscript/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="jscript/init.js"></script>
+    <script src="jscript/jquery.mobile-1.2.0-alpha.1.min.js"></script>
+
+    <title>百事通挂机短信</title>
+
+</head>
+<body>
+
+<div data-role="page" id="bstTemplate">
+<div data-role="header" class="bt-header-statistics">
+    <a class="bt-btn-backprev" href="calling_list.html" data-role="none"></a>
+    <a class="bt-btn-addrecord" bstname="addTplSMS" href="#" data-role="none"></a>
+
+    <div class="bt-headocer">挂机短信</div>
+</div>
+
+<!-- /header -->
+
+<div data-role="content">
+    <div class="bt-content">
+
+        <div class="bt-template-list">
+            <ul bstname="tplSMSList">
+                <li bst-data-id=1>
+                    <div class="template-header"><span>AM</span><a bstname="tplsms" data-role="none"
+                                                                   href="#">删除</a></div>
+                    <div class="template-content"><p>
+                        欢迎致电上海移数通电讯有限公司--中国领先的移动互联信息平台服务商。挂机短信业务，一个来电，一次宣传！致电4008111986可申请体验!</p></div>
+                </li>
+                <li bst-data-id=2>
+                    <div class="template-header"><span>AM</span><a bstname="tplsms" data-role="none" href="#">删除</a>
+                    </div>
+                    <div class="template-content"><p>
+                        欢迎致电上海移数通电讯有限公司--中国领先的移动互联信息平台服务商。挂机短信业务，一个来电，一次宣传！致电4008111986可申请体验!</p></div>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="bt-hsms-input hsms-padding">
+            <div class="input-title">短信模板</div>
+            <div class="bt-hsms-count">短信内容 <span bstname="curWords">0</span>/70 字<a bstname="cleartxt"
+                                                                                     data-role="none"
+                                                                                     class="btn-clear bt-btn-commShaRad1"
+                                                                                     href="">清空</a></div>
+            <div><textarea name="smscontent" class="bt-smstextarea"></textarea>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /content -->
+
+<div data-role="footer" data-theme="none" data-position="fixed" class="bt-footer">
+    <div class="splitline"></div>
+    <div class="bt-footer-quiter">
+        <span class="srvnum">客服热线：4008111986</span><a data-role="none" class="btn-quit" href="#">退出</a>
+    </div>
+</div>
+
+<!-- /POPUP -->
+<div data-role="popup" id="pmtpopconfig2" data-overlay-theme="a" data-theme="c" style="min-width:256px;"
+     class="ui-corner-all">
+    <div data-role="header" data-theme="b" class="ui-corner-top">
+        <h1 pmt="heading">警告</h1>
+    </div>
+    <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+        <p class="bt-popup-content" pmt="content"></p>
+
+
+        <div class="ui-grid-a">
+            <div class="ui-block-a">
+                <a bstname="delConfig" type="button" data-theme="b" data-mini="true">确定</a>
+            </div>
+            <div class="ui-block-b">
+                <a type="button" data-rel="back" data-theme="c" data-mini="true" data-rel="back">取消</a>
+            </div>
+        </div>
+
+        <div class="ui-grid-solo">
+            <div class="ui-block-a">
+                <a bstname="actionTip" type="button" data-rel="back" data-theme="b" data-mini="true"
+                   data-rel="back">确定</a>
+            </div>
+        </div>
+
+
+        <div class="clearline-8"></div>
+    </div>
+</div>
+
+<!-- recROW-->
+
+<li bst-data-tplid="id" style="display: none">
+    <div class="template-header"><span bstTag="noon">AM</span><a bstname="tplsms" data-role="none"
+                                                                 href="#">删除</a>
+    </div>
+    <div class="template-content"><p bstTag="sms">
+        欢迎致电上海移数通电讯有限公司--中国领先的移动互联信息平台服务商。挂机短信业务，一个来电，一次宣传！致电4008111986可申请体验!</p></div>
+</li>
+
+<!-- /recROW-->
+<script type="text/javascript">
+
+    loginValidor.reqValidate(); //-- 验证登录;
+    var $liSMS;
+    var url = 'loadmore.html';
+    var pages = 1;
+
+    /*
+     * 初始化加载短信
+     * */
+    $('ul[bstname=tplSMSList]').empty();  //-- 清空短信记录
+    reqTplSMSList(url, pages);  //-- 请求并加载短信数据
+    pages++;
+
+    /**
+     * 初始化弹出层;
+     */
+    domPOP = new _Tip2POPUPS($('#pmtpopconfig2'));
+
+    /**
+     * 弹出删除短信确认层;
+     */
+
+    $('a[bstname=tplsms]').bind("click", function () {
+        $liSMS = $(this).parents("li");
+        domPOP.setTitle("删除确认")
+        domPOP.setContent("确认要删除短信记录");
+        domPOP.configButton();
+        domPOP.openPopups();
+    })
+
+    /**
+     * 删除短信记录行;
+     */
+
+    $('a[bstname=delConfig]').bind('click', function () {
+        var url = 'do.html';
+        $.post(url, $liSMS.attr("bst-data-tplid"), function (r) {
+            console.log(r);
+            domPOP.closePopups();  //-- 关闭弹出层
+            $liSMS.fadeOut("slow", function () {
+                $(this).remove();
+            }); //-- 删除记录行
+        })
+    });
+
+    /**
+     * 提交短信;
+     */
+
+    $('a[bstname=addTplSMS]').bind('click', function () {
+        var $txtarea = $('textarea[name=smscontent]');
+        if ($.trim($txtarea.val()) == "") {
+            domPOP.setTitle("提示")
+            domPOP.setContent("请输入短信内容");
+            domPOP.tipButton();
+            domPOP.openPopups();
+            return false;
+        }
+
+        /*-- 增加短信记录*/
+        var url = 'do.html';
+        $.post(url, $txtarea.val(), function (r) {
+            console.log(r);
+            r = {id:23, noon:'PM'}
+            var $liNew = $('li[bst-data-tplid=id]').clone(true);
+            $liNew.attr('bst-data-tplid', r.id);
+            $liNew.find('span[bstTag=noon]').html(r.noon);
+            $liNew.find('p[bstTag=content]').html($txtarea.val());
+            $liNew.prependTo('ul[bstname=tplSMSList]').show('slow');
+            $txtarea.val(null);
+            return false;
+        })
+    })
+
+    /*
+     * 请求加载短信记录数据
+     * */
+
+    function reqTplSMSList(url, pages) {
+        $.post(url, {page:pages}, function (arr) {
+            pages++;
+            arr = [0, 1]; //-- 返回的短信数组 .ex arr=[{id:23, state:'所有来电', time:'19:00-24:00', extent:'不限周期', sms:'中国领先的移动互...'}]
+            for (var i = 0 in arr) {
+                recLoadTplRows(arr[i]).appendTo('ul[bstname=tplSMSList]').show('slow');
+            }
+            btnLoadmoreShow();  // 显示或隐藏加载按钮
+        })
+    }
+
+
+    /*-- 加载更多短信记录*/
+    function recLoadTplRows(jarr) {
+        jarr = {id:558, noon:'PM', sms:'欢迎致电上海移数通电讯有限公司--中国领先的移动互联信息平台服务商。挂机短信业务，一个来电，一次宣传了！'}
+        var $liNew = $('li[bst-data-tplid=id]').clone(true);
+        $liNew.attr('bst-data-tplid', jarr.id);
+        $liNew.find('span[bstTag=noon]').html(jarr.noon);
+        $liNew.find('p[bstTag=sms]').html(jarr.sms);
+        return $liNew;
+    }
+
+    /*
+     * 显示及隐藏更多加载按钮
+     * */
+
+    function btnLoadmoreShow() {
+        $('div.btn-loadmore').show();
+        if (!$('ul[bstname=hookSMSList] li:first')[0]) {
+            $('div.btn-loadmore').hide();
+        }
+    }
+
+    /*-- 清空输入的短信文本*/
+
+    $('a[bstname=cleartxt]').bind('click', function () {
+        $('textarea[name=smscontent]').val(null);
+        $('span[bstname=curWords]').html(0);
+    })
+
+    /*-- 统计输入字数*/
+    $('textarea[name=smscontent]').jitchange(function () {
+        countWordsNum();
+    });
+
+
+</script>
+
+</div>
+<!-- /page -->
+
+</body>
+</html>
+
+
+
+

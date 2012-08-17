@@ -1,0 +1,175 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/jquery.mobile-1.2.0-alpha.1.min.css"/>
+    <link rel="stylesheet" href="css/bt-doc.css">
+    <script src="jscript/jquery-1.7.2.min.js"></script>
+    <script src="jscript/jquery.mobile-1.2.0-alpha.1.min.js"></script>
+    <title>百事通挂机短信</title>
+
+</head>
+<body>
+
+<div data-role="page" id="bstCallNum">
+    <div data-role="header" class="bt-header-statistics">
+        <a class="bt-btn-backprev" href="controler.html" data-role="none"></a>
+        <a data-role="none" bstname="countCalled" class="bt-btn-allcalling" href="#"></a>
+
+        <div class="bt-headocer2">手机来电记录</div>
+    </div>
+
+    <!-- /header -->
+
+
+    <div data-role="content">
+        <div class="bt-content">
+            <div class="bt-callnum-searchbar">
+                <input data-role="none" class="bt-input-commShaRad1" type="text" maxlength="30">
+                <a data-role="none" bstname="btnSearch" class="bt-btn-commShaRad1" href="#">搜索</a>
+            </div>
+            <div class="bt-callnum-list">
+                <ul bstname="recCallingList">
+
+                </ul>
+                <div class="btn-loadmore">
+                    <button bstname="btnLoadmore" data-role="button" data-theme="c" data-mini="true">加载更多</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /content -->
+
+
+    <div data-role="footer" data-theme="none" data-position="fixed" class="bt-footer">
+        <div class="splitline"></div>
+        <div class="bt-footer-quiter">
+            <span class="srvnum">客服热线：4008111986</span><a data-role="none" class="btn-quit" href="#">退出</a>
+        </div>
+    </div>
+    <!-- /footer -->
+
+    <!-- recRow -->
+    <li bst-data-id=tid style="display: none">
+        <a class="callingRow" data-role="none" href="viewcontecter.html">
+            <div class="call-state"><span bstTag="recName" class="guestname">李先生</span><span
+                    bstTag="recEdge" class="iconstate">免</span><span bstTag="recReceive"
+                                                                     class="callstate">已接通</span></div>
+            <div class="call-info"><span bstTag="recMobile" class="guestnum">手机 13651963992</span><span bstTag="recTime"
+                                                                                                        class="calltime">，16:00</span><span
+                    bstTag="recDate" class="calldate">7月10日</span></div>
+
+        </a>
+    </li>
+
+    <!-- /recRow -->
+    <script type="text/javascript">
+
+        loginValidor.reqValidate(); //-- 验证登录;
+
+        var url = 'loadmore.html';  //请求处理页面url
+        var pages = 1;
+
+        /*
+         * 初始化加载短信
+         * */
+        $('ul[bstname=recCallingList]').empty();  //-- 清空短信记录
+        reqSMSList(url, pages);  //-- 请求并加载短信数据
+        pages++;
+
+        /*
+         * 显示及隐藏更多加载按钮
+         * */
+
+        function btnLoadmoreShow() {
+            $('div.btn-loadmore').show();
+            if (!$('ul[bstname=recCallingList] li:first')[0]) {
+                $('div.btn-loadmore').hide();
+            }
+        }
+
+
+        /*
+         * 顶部右侧来电分类按钮切换 [所有来电 | 已接来电 | 未接来电]
+         * */
+
+        $('a[bstname=countCalled]').toggle(function () {
+            $(this).removeClass().addClass('bt-btn-receivecall');
+            reqSeekSMSList(url);    //-- 加载搜索结果数据
+        }, function () {
+            $(this).removeClass().addClass('bt-btn-unreceivecall');
+            reqSeekSMSList(url);    //-- 加载搜索结果数据
+        }, function () {
+            $(this).removeClass().addClass('bt-btn-allcalling');
+            reqSeekSMSList(url);    //-- 加载搜索结果数据
+        })
+
+        /*
+         * 加载更多短信记录
+         * */
+
+        /*-- 生成短信记录*/
+        function recLoadRows(jarr) {
+            jarr = {id:23, recName:'所有来电', recEdge:'19:00-24:00', recReceive:'不限周期', recMobile:'13651985487', recTime:'19:00', recDate:'7月12日'}
+            var $liNew = $('li[bst-data-id=tid]').clone(true);
+            $liNew.attr('bst-data-id', jarr.id);
+            $liNew.find('span[bstTag=recName]').html(jarr.state);
+            $liNew.find('span[bstTag=recEdge]').html(jarr.time);
+            $liNew.find('span[bstTag=recReceive]').html(jarr.extent);
+            $liNew.find('p[bstTag=recMobile]').html(jarr.sms);
+            $liNew.find('p[bstTag=recTime]').html(jarr.sms);
+            $liNew.find('p[bstTag=recDate]').html(jarr.sms);
+            return $liNew;
+        }
+
+        /*-- 请求加载短信记录数据*/
+        function reqSMSList(url, pages) {
+            $.post(url, {page:pages}, function (arr) {
+                pages++;
+                arr = [0, 1]
+                for (var i = 0 in arr) {
+                    recLoadRows(arr[i]).appendTo('ul[bstname=recCallingList]').show('slow');
+                }
+                btnLoadmoreShow();  // 显示或隐藏加载按钮
+            })
+        }
+
+        /*-- 加载更多短信数据(请求分页)*/
+        $('button[bstname=btnLoadmore]').click(function () {
+            reqSMSList(url, pages);
+        })
+
+        /*
+         * 搜索来电记录
+         * */
+
+        function reqSeekSMSList(url) {
+            $.post(url, {page:1}, function (arr) {
+                $('ul[bstname=recCallingList]').empty();
+                pages = 1;
+                arr = [0, 1, 2]
+                for (var i = 0 in arr) {
+                    recLoadRows(arr[i]).appendTo('ul[bstname=recCallingList]').show('slow');
+                }
+                btnLoadmoreShow();  // 显示或隐藏加载按钮
+            })
+        }
+
+        /*-- */
+        $('a[bstname=btnSearch]').click(function () {
+            reqSeekSMSList(url);
+        })
+
+
+    </script>
+
+</div>
+<!-- /page -->
+
+</body>
+</html>
+
+
+
+
