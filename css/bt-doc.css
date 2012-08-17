@@ -72,11 +72,7 @@ p.bt-popup-content {
     font-weight: bold;
 }
 
-#popupconfig1 .ui-content, #popuptip .ui-content {
-    padding: 0
-}
-
-div[data-role=popup] .ui-content {
+#popupconfig1 .ui-content, #popuptip .ui-content, #popuptipmmod .ui-content {
     padding: 0
 }
 
